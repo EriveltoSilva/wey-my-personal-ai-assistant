@@ -57,19 +57,7 @@ export function ChatRoom() {
     await sendMessage(chatId, currentQuery, session.access_token);
   }, [inputValue, isLoading, chatId, session?.access_token, sendMessage]);
 
-  // Check if we need to process a single user message after loading chat history
-  useEffect(() => {
-    (async () => {
-      if (!isInitializing && chatMessages.length === 1 && chatMessages[0].role === "user" && !isLoading) {
-        if (chatId && session?.access_token) {
-          await sendMessage(chatId, chatMessages[0].content, session.access_token);
-        }
-      }
-    })();
-  }, [chatMessages, sendMessage, isInitializing, isLoading, chatId, session?.access_token]);
-
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    // Allow Shift+Enter for new lines
     if (e.key === "Enter" && !e.shiftKey && inputValue.trim() !== "") {
       e.preventDefault();
       handleSendMessage();
