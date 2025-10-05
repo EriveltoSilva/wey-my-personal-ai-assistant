@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useLocation } from "react-router-dom";
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarRail } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarRail, SidebarTrigger } from "@/components/ui/sidebar";
 import { API_URL } from "@/constants/api";
 import { useAuth } from "@/hooks/use-auth";
 import type { ChatResponse } from "@/types/chats";
@@ -102,9 +102,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar collapsible="icon" {...props}>
+      <div className="flex items-center justify-end px-1 pt-4">
+        <SidebarTrigger className="-ml-1" />
+      </div>
       {/* <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
-      </SidebarHeader> */}
+        </SidebarHeader> */}
       <SidebarContent>
         {/*<NavAgents data={data.agentData} />*/}
         <NavChats data={chatMenuItems} deleteChat={deleteChat} />

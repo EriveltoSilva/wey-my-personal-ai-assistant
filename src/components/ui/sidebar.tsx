@@ -116,8 +116,8 @@ function SidebarProvider({
 }
 
 function Sidebar({
-  side = "left",
-  variant = "sidebar",
+  side = "right",
+  variant = "floating",
   collapsible = "offcanvas",
   className,
   children,
@@ -133,7 +133,8 @@ function Sidebar({
     return (
       <div
         data-slot="sidebar"
-        className={cn("bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col", className)}
+        // className={cn("bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col", className)}
+        className={cn("bg-red-600 text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col", className)}
         {...props}
       >
         {children}

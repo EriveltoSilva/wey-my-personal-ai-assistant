@@ -115,32 +115,21 @@ function InitialChatState({
   if (isLoading) return <LoadingChatMessages />;
 
   return (
-    // <img
-    //   src="/wey.gif"
-    //   alt="Wey Logo"
-    //   className="w-48 h-48 absolute top-10 right-10 opacity-20 blur-sm animate-pulse"
-    //   style={{ animationDuration: "10s" }}
-    // />
     <div
-      style={{
-        backgroundImage: "url(/wey.gif)",
-        backgroundSize: "contain",
-        // backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-      // className="flex bg-transparent bg-gradient-to-br from-gray-900 to-gray-800 flex-col items-center justify-center  h-screen"
-      className="flex bg-transparent flex-col items-center justify-center  h-screen"
+      // style={{
+      //   backgroundImage: "url(/wey.gif)",
+      //   backgroundSize: "contain",
+      //   backgroundPosition: "center",
+      //   backgroundRepeat: "no-repeat",
+      // }}
+      className="flex flex-col items-center justify-center h-screen"
     >
       <div className="w-full max-w-4xl mx-auto">
-        {/* Welcome message */}
-        <div className="text-center mb-8">
-          {/* <h1 className="text-4xl font-semibold text-foreground mb-2">Olá, em que posso ajuda-lo?</h1> */}
-          <h1 className="text-4xl font-semibold text-white mb-2">
-            Hello <span className="text-blue-400">Sr.</span> Como posso <span className="text-blue-400">ajuda-lo</span>{" "}
-            hoje?
-          </h1>
-          {/* <p className="text-2xl text-gray-200">O que queres de mim humano?</p> */}
-        </div>
+        {/* <h1 className="text-4xl font-semibold text-foreground mb-2">Olá, em que posso ajuda-lo?</h1> */}
+        <h1 className="text-4xl text-center font-semibold text-white mb-10">
+          Hello <span className="text-blue-400">Sr.</span> Como posso <span className="text-blue-400">ajuda-lo</span>{" "}
+          hoje?
+        </h1>
 
         {/* Input area */}
         <div className="relative">

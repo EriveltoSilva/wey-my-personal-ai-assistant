@@ -23,7 +23,7 @@ function AppRoutes() {
         <Route
           path="/chat"
           element={
-            <Layout breadcrumbTitle="Chat-i">
+            <Layout>
               <ProtectedPage>
                 <ChatInit />
               </ProtectedPage>
@@ -33,7 +33,7 @@ function AppRoutes() {
         <Route
           path="/chat/:chatId"
           element={
-            <Layout breadcrumbTitle="Chat-r">
+            <Layout>
               <ProtectedPage>
                 <ChatRoom />
               </ProtectedPage>

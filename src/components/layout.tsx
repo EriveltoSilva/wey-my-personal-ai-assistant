@@ -1,35 +1,32 @@
 import { AppSidebar } from "@/components/sidebar-components/app-sidebar";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import type { ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 
 interface LayoutProps {
   children: ReactNode;
-  breadcrumbTitle?: string;
-  breadcrumbHref?: string;
 }
 
-export const Layout = ({ children, breadcrumbTitle = "", breadcrumbHref = "#" }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
+  const location = useLocation();
+
+  // Check if current path matches chat with ID pattern (/chat/[uuid])
+  const isChatConversation = /^\/chat\/[a-f0-9-]{36}$/i.test(location.pathname);
+
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href={breadcrumbHref}>{breadcrumbTitle}</BreadcrumbLink>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4">{children}</div>
+      <SidebarInset
+        className="relative z-20 bg-[#000] bg-no-repeat bg-cover bg-center"
+        style={{
+          backgroundImage: !isChatConversation ? "url(/wey.gif)" : "none",
+          // backgroundImage: "url(/ai-stop.gif)",
+          // backgroundImage: "url(/ai-thinking.gif)",
+          zIndex: 1,
+        }}
+      >
+        <div className="flex flex-1 flex-col gap-4 bg-transparent relative z-20">{children}</div>
       </SidebarInset>
+      <AppSidebar />
     </SidebarProvider>
   );
 };

@@ -3,9 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { ChatAssistantWritingEffect } from "@/components/chats/chat-assistant-writing-effect";
-import { LoadingChatMessages } from "@/components/chats/loading-chat-messages";
 import { MessageContent } from "@/components/chats/message-content";
 import { Button } from "@/components/ui/button";
+import { LOGO_THINKING, LOGO_WAITING } from "@/constants/logo";
 import { useAuth } from "@/hooks/use-auth";
 import { useChat } from "@/hooks/use-chat";
 
@@ -76,9 +76,18 @@ export function ChatRoom() {
     }
   };
 
-  //Show loading state while initializing
   if (isInitializing) {
-    return <LoadingChatMessages />;
+    // return <LoadingChatMessages />;
+    return (
+      <div className="flex items-center justify-center h-full">
+        <img
+          src={LOGO_THINKING}
+          alt="Wey Logo"
+          className="w-80 h-80 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 "
+        />
+        <p className="absolute">Analisando Sr...</p>
+      </div>
+    );
   }
 
   // Show error if no chat ID
@@ -101,9 +110,15 @@ export function ChatRoom() {
 
   // Chat state - with messages
   return (
-    <div className="flex flex-col h-full max-h-screen">
+    <div className="flex flex-col h-full max-h-screen relative">
+      <img
+        src={LOGO_WAITING}
+        alt="Wey Logo"
+        className="w-64 h-64 absolute left-25 top-35 transform -translate-x-1/2 -translate-y-1/2"
+      />
+
       {/* Chat messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-hide relative z-10">
         <div className="max-w-4xl mx-auto space-y-6">
           {chatMessages.map((message) => {
             if (message.role === "user") {
@@ -135,9 +150,9 @@ export function ChatRoom() {
       </div>
 
       {/* Input area */}
-      <div className="border-t border-border bg-background p-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-end gap-2 p-3 bg-card border border-border rounded-2xl shadow-sm">
+      <div className="border-t border-border bg-background p-4 relative z-10">
+        <div className="max-w-4xl mx-auto ">
+          <div className="flex items-end gap-2 p-3 bg-card border border-border rounded-2xl shadow-sm focus-within:border-blue-400 focus-within:shadow-lg focus-within:shadow-blue-400/20">
             <Button
               disabled
               title="Ainda não temos nenhum recurso para ferramentas"
