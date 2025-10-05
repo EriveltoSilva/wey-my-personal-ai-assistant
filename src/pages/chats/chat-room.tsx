@@ -111,11 +111,14 @@ export function ChatRoom() {
   // Chat state - with messages
   return (
     <div className="flex flex-col h-full max-h-screen relative">
-      <img
-        src={LOGO_WAITING}
-        alt="Wey Logo"
-        className="w-64 h-64 absolute left-25 top-35 transform -translate-x-1/2 -translate-y-1/2"
-      />
+      {!isLoading && (
+        <img
+          // src={isLoading ? LOGO_THINKING : LOGO_WAITING}
+          src={LOGO_WAITING}
+          alt="Wey Logo"
+          className="w-64 h-64 absolute left-25 top-35 transform -translate-x-1/2 -translate-y-1/2  transition-normal duration-500 ease-in-out"
+        />
+      )}
 
       {/* Chat messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-hide relative z-10">
