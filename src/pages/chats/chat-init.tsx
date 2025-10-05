@@ -115,17 +115,29 @@ function InitialChatState({
   if (isLoading) return <LoadingChatMessages />;
 
   return (
+    // <img
+    //   src="/wey.gif"
+    //   alt="Wey Logo"
+    //   className="w-48 h-48 absolute top-10 right-10 opacity-20 blur-sm animate-pulse"
+    //   style={{ animationDuration: "10s" }}
+    // />
     <div
-      style={{ backgroundImage: "url(/loki.png)", backgroundSize: "cover", backgroundPosition: "center" }}
-      className="flex  bg-amber-300 flex-col items-center justify-center  h-screen"
+      style={{
+        backgroundImage: "url(/wey.gif)",
+        backgroundSize: "contain",
+        // backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+      // className="flex bg-transparent bg-gradient-to-br from-gray-900 to-gray-800 flex-col items-center justify-center  h-screen"
+      className="flex bg-transparent flex-col items-center justify-center  h-screen"
     >
       <div className="w-full max-w-4xl mx-auto">
         {/* Welcome message */}
         <div className="text-center mb-8">
           {/* <h1 className="text-4xl font-semibold text-foreground mb-2">Olá, em que posso ajuda-lo?</h1> */}
-          <h1 className="text-4xl font-semibold text-foreground mb-2">
-            Eu sou <span className="text-amber-300">Loki</span>, o{" "}
-            <span className="text-amber-300">Principe do Submundo</span>
+          <h1 className="text-4xl font-semibold text-white mb-2">
+            Hello <span className="text-blue-400">Sr.</span> Como posso <span className="text-blue-400">ajuda-lo</span>{" "}
+            hoje?
           </h1>
           {/* <p className="text-2xl text-gray-200">O que queres de mim humano?</p> */}
         </div>
@@ -133,14 +145,14 @@ function InitialChatState({
         {/* Input area */}
         <div className="relative">
           {/* <div className="flex flex-col gap-2 p-4 bg-card border border-border rounded-2xl shadow-sm"> */}
-          <div className="flex flex-col gap-2 p-4 bg-black/60 border border-border rounded-2xl shadow-sm">
+          <div className="flex flex-col gap-2 p-4 bg-black/60 border border-border rounded-2xl shadow-sm transition-all duration-300 focus-within:border-blue-400 focus-within:shadow-lg focus-within:shadow-blue-400/20">
             <div className="flex items-end gap-2 p-4">
               <textarea
                 ref={inputRef}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={onKeyPress}
-                placeholder="O que queres de mim, humano?"
+                placeholder="Esperando sua pergunta..."
                 rows={1}
                 className="flex-1 bg-transparent border-0 resize-none outline-none placeholder:text-muted-foreground text-lg py-2 px-0 min-h-[28px] max-h-[200px] overflow-y-auto scrollbar-hide"
                 style={{

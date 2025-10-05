@@ -94,11 +94,31 @@ export const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black"></div>
       </div>
+
+      {/* Background GIF Images - Hidden Effect with 4s Pulse */}
+      <img
+        src="/wey.gif"
+        alt="Wey Logo"
+        className="w-48 h-48 absolute top-10 right-10 opacity-20 blur-sm animate-pulse"
+        style={{ animationDuration: "10s" }}
+      />
+      <img
+        src="/wey.gif"
+        alt="Wey Logo"
+        className="w-56 h-56 absolute bottom-10 left-10 opacity-15 blur-sm animate-pulse"
+        style={{ animationDuration: "10s" }}
+      />
+      <img
+        src="/wey.gif"
+        alt="Wey Logo"
+        className="w-40 h-40 absolute top-1/3 left-5 opacity-25 blur-sm animate-pulse"
+        style={{ animationDuration: "10s" }}
+      />
 
       <div className="relative w-full max-w-md lg:max-w-2xl">
         {/* Card Principal */}
@@ -109,7 +129,7 @@ export const SignUpPage = () => {
             {/* <img src="/robot.png" alt="Logo" className="w-12 h-12 absolute" /> */}
             {/* </div> */}
             <div className="inline-flex items-center justify-center w-20 h-20 mb-4 shadow-lg">
-              <img src="/onepieceloki.jpg" alt="Logo" className="w-24 h-24 absolute rounded-full" />
+              <img src="/wey.gif" alt="Wey Logo" className="w-24 h-24 absolute rounded-full" />
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">Criar Conta</h1>
             <p className="text-zinc-400">Preencha os dados para criar sua conta</p>

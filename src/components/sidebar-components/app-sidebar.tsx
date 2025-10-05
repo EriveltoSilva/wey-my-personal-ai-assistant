@@ -1,8 +1,6 @@
-import { Frame, GalleryVerticalEnd, PieChart } from "lucide-react";
 import * as React from "react";
 import { useLocation } from "react-router-dom";
 
-import { NavAgents } from "@/components/sidebar-components/nav-agents";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarRail } from "@/components/ui/sidebar";
 import { API_URL } from "@/constants/api";
 import { useAuth } from "@/hooks/use-auth";
@@ -10,27 +8,27 @@ import type { ChatResponse } from "@/types/chats";
 import { NavChats } from "./nav-chats";
 import { NavUser } from "./nav-user";
 
-const data = {
-  teams: [
-    {
-      name: "DBTD",
-      logo: GalleryVerticalEnd,
-      plan: "RIT",
-    },
-  ],
-  agentData: [
-    {
-      name: "(Indisponivel) Mestre de Leis",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "(Indisponivel) Analisador de CV Expert",
-      url: "#",
-      icon: PieChart,
-    },
-  ],
-};
+// const data = {
+//   teams: [
+//     {
+//       name: "DBTD",
+//       logo: GalleryVerticalEnd,
+//       plan: "RIT",
+//     },
+//   ],
+//   agentData: [
+//     {
+//       name: "(Indisponivel) Mestre de Leis",
+//       url: "#",
+//       icon: Frame,
+//     },
+//     {
+//       name: "(Indisponivel) Analisador de CV Expert",
+//       url: "#",
+//       icon: PieChart,
+//     },
+//   ],
+// };
 
 interface ChatMenuItem {
   id: string;
@@ -108,7 +106,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader> */}
       <SidebarContent>
-        <NavAgents data={data.agentData} />
+        {/*<NavAgents data={data.agentData} />*/}
         <NavChats data={chatMenuItems} deleteChat={deleteChat} />
         {/* <NavMain items={data.navMain} /> */}
       </SidebarContent>

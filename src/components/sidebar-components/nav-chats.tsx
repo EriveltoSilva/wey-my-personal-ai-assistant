@@ -32,7 +32,7 @@ export function NavChats({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Chats recentes</SidebarGroupLabel>
+      <SidebarGroupLabel>Últimas conversas</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton asChild>

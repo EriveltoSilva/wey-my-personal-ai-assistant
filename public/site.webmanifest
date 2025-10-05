@@ -1,7 +1,7 @@
 {
-  "name": "Friday - AI Agent Management Platform",
-  "short_name": "Friday",
-  "description": "First Angolan AI Agent Management Platform for productivity and automation",
+  "name": "Wey - My Personal AI Assistant",
+  "short_name": "Wey",
+  "description": "Personal AI Assistant for Smart Automation, Productivity and IoT Control",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1f2937",
@@ -9,16 +9,16 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "pt-AO",
-  "categories": ["productivity", "business", "utilities"],
+  "categories": ["productivity", "utilities", "lifestyle"],
   "icons": [
     {
-      "src": "/robot.png",
+      "src": "/wey-without-bg.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/robot.png",
+      "src": "/wey-without-bg.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -28,23 +28,23 @@
     {
       "name": "Chat",
       "short_name": "Chat",
-      "description": "Start a new chat with AI agents",
+      "description": "Start a new conversation with Wey",
       "url": "/chats",
       "icons": [
         {
-          "src": "/robot.png",
+          "src": "/wey-without-bg.png",
           "sizes": "96x96"
         }
       ]
     },
     {
-      "name": "Agents",
-      "short_name": "Agents",
-      "description": "Manage your AI agents",
-      "url": "/agents",
+      "name": "Assistant",
+      "short_name": "Assistant",
+      "description": "Access Wey AI Assistant features",
+      "url": "/assistant",
       "icons": [
         {
-          "src": "/robot.png",
+          "src": "/wey-without-bg.png",
           "sizes": "96x96"
         }
       ]

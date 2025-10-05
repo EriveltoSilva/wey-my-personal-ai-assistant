@@ -67,21 +67,25 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black"></div>
       </div>
+
+      {/* Background GIF Images - Hidden Effect */}
+      {/* <img src="/wey.gif" alt="Wey Logo" className="w-64 h-64 absolute top-20 left-16 opacity-25 blur-sm" /> */}
+      <img src="/wey.gif" alt="Wey Logo" className="w-64 h-64 absolute left-1/2  blur-sm" />
+      {/* <img src="/wey.gif" alt="Wey Logo" className="w-52 h-52 absolute bottom-20 right-20 opacity-50 blur-sm" /> */}
 
       <div className="relative w-full max-w-md">
         {/* Card Principal */}
         <div className="bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-zinc-800 shadow-2xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            {/* <div className="inline-flex items-center justify-center w-18 h-18 bg-white rounded-full mb-4 shadow-lg"> */}
-            <div className="inline-flex items-center justify-center w-20 h-20 mb-4 shadow-lg">
-              {/* <img src="/robot.png" alt="Logo" className="w-12 h-12 absolute" /> */}
-              <img src="/onepieceloki.jpg" alt="Logo" className="w-24 h-24 absolute rounded-full" />
+            <div className="inline-flex items-center justify-center w-16 h-16 mb-4 shadow-lg">
+              <img src="/wey.gif" alt="Wey Logo" className="w-24 h-24 absolute rounded-full" />
+              {/* <img src="/wey.gif" alt="Wey Logo" className="w-30 h-30 absolute bg-transparent" /> */}
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">Bem-vindo</h1>
             <p className="text-zinc-400">Entre com sua conta para continuar</p>
@@ -122,6 +126,7 @@ export const LoginPage = () => {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                     className="w-full pl-11 pr-12 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 backdrop-blur-sm transition-all duration-200"
                     placeholder="Sua senha"
                     required
