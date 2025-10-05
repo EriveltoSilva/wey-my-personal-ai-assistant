@@ -18,8 +18,6 @@ interface InitialChatStateProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
-const DEFAULT_AGENT_ID = "27a094de-f3b8-4b47-b81e-eae1d8ba40c3";
-
 export function ChatInit() {
   const { session } = useAuth();
   const { addMessage, updateMessage, clearMessages, createChat, isCreatingChat } = useChat();
@@ -68,7 +66,6 @@ export function ChatInit() {
       console.log("Creating new chat with message:", currentQuery);
 
       const result = await createChat({
-        agentId: DEFAULT_AGENT_ID,
         initialMessage: currentQuery,
         accessToken: session.access_token,
       });
@@ -115,25 +112,14 @@ function InitialChatState({
   if (isLoading) return <LoadingChatMessages />;
 
   return (
-    <div
-      // style={{
-      //   backgroundImage: "url(/wey.gif)",
-      //   backgroundSize: "contain",
-      //   backgroundPosition: "center",
-      //   backgroundRepeat: "no-repeat",
-      // }}
-      className="flex flex-col items-center justify-center h-screen"
-    >
+    <div className="flex flex-col items-center justify-center h-screen">
       <div className="w-full max-w-4xl mx-auto">
-        {/* <h1 className="text-4xl font-semibold text-foreground mb-2">Olá, em que posso ajuda-lo?</h1> */}
         <h1 className="text-4xl text-center font-semibold text-white mb-10">
           Hello <span className="text-blue-400">Sr.</span> Como posso <span className="text-blue-400">ajuda-lo</span>{" "}
           hoje?
         </h1>
 
-        {/* Input area */}
         <div className="relative">
-          {/* <div className="flex flex-col gap-2 p-4 bg-card border border-border rounded-2xl shadow-sm"> */}
           <div className="flex flex-col gap-2 p-4 bg-black/60 border border-border rounded-2xl shadow-sm transition-all duration-300 focus-within:border-blue-400 focus-within:shadow-lg focus-within:shadow-blue-400/20">
             <div className="flex items-end gap-2 p-4">
               <textarea

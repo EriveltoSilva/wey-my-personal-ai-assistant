@@ -6,7 +6,6 @@ export interface ChatResponse {
   last_message_at: string;
   created_at: string;
   user_id: string;
-  agent_id: string;
 }
 
 export interface ChatMessage {
@@ -21,6 +20,5 @@ export interface ChatMessage {
 }
 
 export interface ChatCreateRequest {
-  agent_id: string;
   initial_message: string;
 }

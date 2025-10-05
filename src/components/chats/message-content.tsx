@@ -6,7 +6,7 @@ import React, { useState } from "react";
 // Suporta formatação HTML <br/> tags que são convertidas em quebras de linha adequadas
 // Exemplo de entrada: "Line 1<br/>Line 2<br/><br/>Line 4"
 // Saída: Lines renderizadas com quebras de linha adequadas
-export const MessageContent = ({ content }: { content: string }) => {
+export const MessageMarkdownRender = ({ content }: { content: string }) => {
   if (!content) return null;
 
   // Pre-process content to handle HTML br tags
@@ -201,98 +201,128 @@ const parseInlineFormatting = (text: string): React.ReactElement[] => {
 const processLineFormatting = (text: string, lineIndex: number): React.ReactElement[] => {
   const elements: React.ReactElement[] = [];
 
-  // Regex patterns para diferentes tipos de formatação
-  const patterns = [
-    {
-      regex: /\*\*(.*?)\*\*/g,
-      component: (text: string, key: number) => (
-        <strong key={key} className="font-semibold">
-          {text}
+  // Process text sequentially to avoid overlapping matches
+  const processedText = text;
+  let currentIndex = 0;
+  let elementIndex = 0;
+
+  // Helper function to check if a new match should replace the current earliest match
+  const shouldUseNewMatch = (
+    currentEarliest: { start: number; end: number; element: React.ReactElement } | null,
+    newStart: number
+  ): boolean => {
+    return currentEarliest === null || newStart < currentEarliest.start;
+  };
+
+  while (currentIndex < processedText.length) {
+    let earliestMatch: { start: number; end: number; element: React.ReactElement } | null = null;
+
+    // Check for bold text (**text**)
+    const boldMatch = processedText.slice(currentIndex).match(/\*\*(.*?)\*\*/);
+    if (boldMatch && boldMatch.index !== undefined) {
+      const start = currentIndex + boldMatch.index;
+      const end = start + boldMatch[0].length;
+      const element = (
+        <strong key={`bold-${lineIndex}-${elementIndex++}`} className="font-semibold">
+          {boldMatch[1]}
         </strong>
-      ),
-    },
-    {
-      regex: /\*(.*?)\*/g,
-      component: (text: string, key: number) => (
-        <em key={key} className="italic">
-          {text}
-        </em>
-      ),
-    },
-    {
-      regex: /~~(.*?)~~/g,
-      component: (text: string, key: number) => (
-        <del key={key} className="line-through">
-          {text}
+      );
+      if (shouldUseNewMatch(earliestMatch, start)) {
+        earliestMatch = { start, end, element };
+      }
+    }
+
+    // Check for italic text (*text*) - but not if it's part of bold
+    const italicMatch = processedText.slice(currentIndex).match(/\*([^*]+?)\*/);
+    if (italicMatch && italicMatch.index !== undefined) {
+      const start = currentIndex + italicMatch.index;
+      const end = start + italicMatch[0].length;
+      // Skip if this would overlap with bold text
+      if (
+        !processedText.slice(Math.max(0, start - 1), start + 1).includes("**") &&
+        !processedText.slice(end - 1, end + 1).includes("**")
+      ) {
+        const element = (
+          <em key={`italic-${lineIndex}-${elementIndex++}`} className="italic">
+            {italicMatch[1]}
+          </em>
+        );
+        if (shouldUseNewMatch(earliestMatch, start)) {
+          earliestMatch = { start, end, element };
+        }
+      }
+    }
+
+    // Check for strikethrough (~~text~~)
+    const strikeMatch = processedText.slice(currentIndex).match(/~~(.*?)~~/);
+    if (strikeMatch && strikeMatch.index !== undefined) {
+      const start = currentIndex + strikeMatch.index;
+      const end = start + strikeMatch[0].length;
+      const element = (
+        <del key={`strike-${lineIndex}-${elementIndex++}`} className="line-through">
+          {strikeMatch[1]}
         </del>
-      ),
-    },
-    {
-      regex: /`([^`]+)`/g,
-      component: (text: string, key: number) => (
-        <code key={key} className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">
-          {text}
+      );
+      if (shouldUseNewMatch(earliestMatch, start)) {
+        earliestMatch = { start, end, element };
+      }
+    }
+
+    // Check for inline code (`text`)
+    const codeMatch = processedText.slice(currentIndex).match(/`([^`]+)`/);
+    if (codeMatch && codeMatch.index !== undefined) {
+      const start = currentIndex + codeMatch.index;
+      const end = start + codeMatch[0].length;
+      const element = (
+        <code key={`code-${lineIndex}-${elementIndex++}`} className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">
+          {codeMatch[1]}
         </code>
-      ),
-    },
-    {
-      regex: /\[([^\]]+)\]\(([^)]+)\)/g,
-      component: (text: string, key: number, url: string) => (
-        <a key={key} href={url} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
-          {text}
+      );
+      if (shouldUseNewMatch(earliestMatch, start)) {
+        earliestMatch = { start, end, element };
+      }
+    }
+
+    // Check for links ([text](url))
+    const linkMatch = processedText.slice(currentIndex).match(/\[([^\]]+)\]\(([^)]+)\)/);
+    if (linkMatch && linkMatch.index !== undefined) {
+      const start = currentIndex + linkMatch.index;
+      const end = start + linkMatch[0].length;
+      const element = (
+        <a
+          key={`link-${lineIndex}-${elementIndex++}`}
+          href={linkMatch[2]}
+          className="text-blue-600 hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {linkMatch[1]}
         </a>
-      ),
-    },
-  ];
-
-  // Encontrar todas as ocorrências de formatação
-  const matches: Array<{ start: number; end: number; element: React.ReactElement }> = [];
-
-  patterns.forEach((pattern) => {
-    let match;
-    pattern.regex.lastIndex = 0; // Reset regex
-
-    while ((match = pattern.regex.exec(text)) !== null) {
-      let element;
-      if (pattern.regex.source.includes("\\[")) {
-        // Link pattern
-        element = pattern.component(match[1], matches.length + lineIndex * 1000, match[2]);
-      } else {
-        element = pattern.component(match[1], matches.length + lineIndex * 1000, "");
-      }
-
-      matches.push({
-        start: match.index,
-        end: match.index + match[0].length,
-        element,
-      });
-    }
-  });
-
-  // Ordenar matches por posição
-  matches.sort((a, b) => a.start - b.start);
-
-  // Construir elementos finais
-  let lastEnd = 0;
-  matches.forEach((match, index) => {
-    // Adicionar texto antes da formatação
-    if (match.start > lastEnd) {
-      const plainText = text.slice(lastEnd, match.start);
-      if (plainText) {
-        elements.push(<span key={`text-${lineIndex}-${index}`}>{plainText}</span>);
+      );
+      if (shouldUseNewMatch(earliestMatch, start)) {
+        earliestMatch = { start, end, element };
       }
     }
 
-    // Adicionar elemento formatado
-    elements.push(match.element);
-    lastEnd = match.end;
-  });
+    if (earliestMatch) {
+      // Add any plain text before the match
+      if (earliestMatch.start > currentIndex) {
+        const plainText = processedText.slice(currentIndex, earliestMatch.start);
+        if (plainText) {
+          elements.push(<span key={`text-${lineIndex}-${elementIndex++}`}>{plainText}</span>);
+        }
+      }
 
-  // Adicionar texto restante
-  if (lastEnd < text.length) {
-    const remainingText = text.slice(lastEnd);
-    if (remainingText) {
-      elements.push(<span key={`remaining-${lineIndex}`}>{remainingText}</span>);
+      // Add the formatted element
+      elements.push(earliestMatch.element);
+      currentIndex = earliestMatch.end;
+    } else {
+      // No more matches, add remaining text
+      const remainingText = processedText.slice(currentIndex);
+      if (remainingText) {
+        elements.push(<span key={`remaining-${lineIndex}-${elementIndex++}`}>{remainingText}</span>);
+      }
+      break;
     }
   }
 

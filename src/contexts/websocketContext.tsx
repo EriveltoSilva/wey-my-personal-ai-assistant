@@ -8,7 +8,6 @@ type WebSocketMessageType = "typing" | "stop_typing" | "error" | "user_message" 
 export interface AgentMessage {
   id: string;
   content: string;
-  agentId: string;
   sender: string;
   created_at: string;
   roomId: string;

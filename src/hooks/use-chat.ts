@@ -3,7 +3,6 @@ import type { ChatCreateRequest, ChatMessage, ChatResponse } from "@/types/chats
 import { useCallback, useState } from "react";
 
 interface CreateChatParams {
-  agentId: string;
   initialMessage: string;
   accessToken: string;
 }
@@ -22,12 +21,11 @@ export const useChat = () => {
   const [isInitializing, setIsInitializing] = useState(true);
 
   const createChat = useCallback(
-    async ({ agentId, initialMessage, accessToken }: CreateChatParams): Promise<CreateChatResult> => {
+    async ({ initialMessage, accessToken }: CreateChatParams): Promise<CreateChatResult> => {
       setIsCreatingChat(true);
 
       try {
         const requestBody: ChatCreateRequest = {
-          agent_id: agentId,
           initial_message: initialMessage,
         };
 

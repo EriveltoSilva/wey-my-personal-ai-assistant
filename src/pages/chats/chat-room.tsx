@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { ChatAssistantWritingEffect } from "@/components/chats/chat-assistant-writing-effect";
-import { MessageContent } from "@/components/chats/message-content";
+import { MessageMarkdownRender } from "@/components/chats/message-content";
 import { Button } from "@/components/ui/button";
 import { LOGO_THINKING, LOGO_WAITING } from "@/constants/logo";
 import { useAuth } from "@/hooks/use-auth";
@@ -129,7 +129,7 @@ export function ChatRoom() {
                 <div key={message.id} className={`flex justify-end`}>
                   <div className={`max-w-[70%] rounded-2xl px-4 py-3 bg-primary text-primary-foreground`}>
                     <div className="text-sm leading-relaxed">
-                      <MessageContent content={message.content} />
+                      <MessageMarkdownRender content={message.content} />
                     </div>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export function ChatRoom() {
               <div key={message.id} className="flex">
                 <div className="w-full rounded-2xl px-4 py-3 text-foreground">
                   <div className="text-sm leading-relaxed">
-                    <MessageContent content={message.content} />
+                    <MessageMarkdownRender content={message.content} />
                   </div>
                 </div>
               </div>
